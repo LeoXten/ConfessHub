@@ -96,14 +96,14 @@
       max-width: 100%;
     }
     table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    th, td { padding: 16px; text-align: left; border-bottom: 1px solid #334155; }
+    th, td { padding: 16px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
     th { background: #1a2438; font-weight: 600; position: sticky; top: 0; }
     tbody tr:hover { background: #2d374850; }
     .message-cell { max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .btn-action {
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
       padding: 8px 12px; border-radius: 6px; cursor: pointer;
-      font-size: 14px; margin-right: 8px; border: 1px solid #334155;
+      font-size: 14px; margin: 4px; border: 1px solid #334155;
       background: transparent; color: var(--text-primary);
       white-space: nowrap;
     }
@@ -123,8 +123,18 @@
       .stat-value { font-size: 26px; }
       .controls { flex-direction: column; align-items: stretch; }
       .filter-group { width: 100%; }
-      .btn-action { padding: 10px; font-size: 12px; }
       th, td { padding: 12px 10px; }
+      .message-cell { max-width: 250px; }
+      /* ✅ Stack action buttons vertically on mobile */
+      td:last-child {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .btn-action {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 480px) {
@@ -139,8 +149,7 @@
       .stat-value { font-size: 24px; }
       .table-wrapper { border-radius: 8px; }
       th, td { padding: 10px 8px; font-size: 14px; }
-      .btn-action { padding: 8px; margin-right: 5px; }
-      .message-cell { max-width: 200px; }
+      .message-cell { max-width: 180px; }
     }
   </style>
 </head>
@@ -298,7 +307,6 @@
       const ctx = canvas.getContext("2d");
       const img = new Image();
 
-      // ✅ Use the actual card.jpg from public folder
       img.src = `${RENDER_APP_URL}/card.jpg`;
 
       img.onload = function () {

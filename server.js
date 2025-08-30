@@ -5,7 +5,10 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://your-render-app.onrender.com', 'http://localhost:5000'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(express.static("public")); // Serve static files from /public folder
 

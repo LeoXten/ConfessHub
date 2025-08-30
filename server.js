@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use(express.static("public")); // Serve static files from /public folder
 
 // ✅ MongoDB connection (make sure password is URL-encoded)
-const mongoURI =
-  "mongodb+srv://gdebanjan89_db_user:DEgh15%40%24@cluster3.odjibsr.mongodb.net/confesshub?retryWrites=true&w=majority&appName=Cluster3";
+// Replace your MongoDB connection line with:
+const mongoURI = process.env.MONGODB_URI || "mongodb+srv://gdebanjan89_db_user:DEgh15%40%24@cluster3.odjibsr.mongodb.net/confesshub?retryWrites=true&w=majority&appName=Cluster3";
 
 mongoose
   .connect(mongoURI, {})

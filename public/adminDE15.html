@@ -48,6 +48,16 @@
       padding: 8px 15px;
       border-radius: 30px;
     }
+    .render-notice {
+      background: var(--card-bg);
+      padding: 12px 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
     .dashboard-header {
       display: flex; justify-content: space-between; align-items: center;
       margin: 25px 0 20px; flex-wrap: wrap; gap: 15px;
@@ -70,15 +80,21 @@
       border-radius: var(--border-radius); margin-bottom: 25px;
       display: flex; flex-wrap: wrap; gap: 15px; align-items: center;
     }
-    .filter-group { display: flex; flex-direction: column; gap: 8px; }
+    .filter-group { display: flex; flex-direction: column; gap: 8px; min-width: 150px; flex: 1; }
     label { font-weight: 500; font-size: 14px; color: var(--text-secondary); }
     input[type="date"], input[type="text"] {
       padding: 10px 15px; border-radius: 8px;
       border: 1px solid #334155; background: #1e293b;
       color: var(--text-primary); font-family: inherit;
+      width: 100%;
     }
     input:focus { outline: none; border-color: var(--accent-color); box-shadow: var(--accent-glow); }
-    .table-container { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; }
+    .table-wrapper {
+      background: var(--card-bg); 
+      border-radius: var(--border-radius); 
+      overflow: auto;
+      max-width: 100%;
+    }
     table { width: 100%; border-collapse: collapse; min-width: 600px; }
     th, td { padding: 16px; text-align: left; border-bottom: 1px solid #334155; }
     th { background: #1a2438; font-weight: 600; position: sticky; top: 0; }
@@ -89,6 +105,7 @@
       padding: 8px 12px; border-radius: 6px; cursor: pointer;
       font-size: 14px; margin-right: 8px; border: 1px solid #334155;
       background: transparent; color: var(--text-primary);
+      white-space: nowrap;
     }
     .btn-download { color: var(--accent-color); border-color: var(--accent-color); }
     .btn-download:hover { background: rgba(14,165,233,0.1); }
@@ -96,6 +113,35 @@
     .btn-delete:hover { background: rgba(239,68,68,0.1); }
     .empty-state { text-align: center; padding: 40px; color: var(--text-secondary); }
     .empty-state i { font-size: 50px; margin-bottom: 15px; opacity: 0.5; }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      nav { padding: 15px; font-size: 18px; }
+      .admin-info span { display: none; }
+      .admin-info { padding: 8px; }
+      h2 { font-size: 22px; }
+      .stat-value { font-size: 26px; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .filter-group { width: 100%; }
+      .btn-action { padding: 10px; font-size: 12px; }
+      th, td { padding: 12px 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 10px; }
+      nav { font-size: 16px; padding: 12px 10px; }
+      .nav-title span { font-size: 16px; }
+      .render-notice { font-size: 12px; padding: 10px; }
+      .dashboard-header { margin: 15px 0; }
+      h2 { font-size: 18px; }
+      .stats-cards { grid-template-columns: 1fr; gap: 15px; }
+      .stat-card { padding: 15px; }
+      .stat-value { font-size: 24px; }
+      .table-wrapper { border-radius: 8px; }
+      th, td { padding: 10px 8px; font-size: 14px; }
+      .btn-action { padding: 8px; margin-right: 5px; }
+      .message-cell { max-width: 200px; }
+    }
   </style>
 </head>
 <body>
@@ -155,7 +201,7 @@
       </button>
     </div>
 
-    <div class="table-container">
+    <div class="table-wrapper">
       <table>
         <thead>
           <tr><th>User ID</th><th>Timestamp</th><th>Message</th><th>Actions</th></tr>

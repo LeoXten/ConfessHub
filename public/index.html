@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ConfessHub</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Background Gradient Animation */
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fcb69f, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+    }
+
+    /* Navbar */
+    .navbar {
+      width: 100%;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.138); 
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Neon Effect Logo */
+    .logo {
+      color: #fff;
+      font-size: xx-large;
+      text-shadow: 
+        0 0 5px #ff77e9,
+        0 0 10px #ff77e9,
+        0 0 20px #ff4ecb,
+        0 0 30px #ff4ecb;
+      animation: neonPulse 2s infinite alternate;
+    }
+
+    @keyframes neonPulse {
+      from {
+        text-shadow: 
+          0 0 5px #ff77e9,
+          0 0 10px #ff77e9,
+          0 0 20px #ff4ecb,
+          0 0 30px #ff4ecb;
+      }
+      to {
+        text-shadow: 
+          0 0 2px #ff77e9,
+          0 0 6px #ff77e9,
+          0 0 12px #ff4ecb,
+          0 0 20px #ff4ecb;
+      }
+    }
+
+    /* Container */
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Glassy Box */
+    .glass-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(18px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      animation: fadeIn 1.2s ease;
+    }
+
+    .glass-box h1 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #f92581;
+      text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 16px;
+      resize: none;
+      background: rgba(255, 255, 255, 0.25);
+      color: #000;
+      font-weight: 500;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    textarea:focus {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
+
+    /* Character Counter */
+    .char-counter {
+      text-align: right;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #6467f5;
+    }
+
+    .char-counter.warning {
+      color: #ffcc00;
+    }
+
+    .char-counter.danger {
+      color: #ff3333;
+      font-weight: bold;
+    }
+
+    /* Ripple Button */
+    button {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      outline: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:disabled {
+      background: linear-gradient(135deg, #cccccc, #999999);
+      cursor: not-allowed;
+      transform: scale(1);
+      box-shadow: none;
+    }
+
+    button:disabled:hover {
+      transform: scale(1);
+      box-shadow: none;
+    }
+
+    /* Ripple Effect */
+    button::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 300%;
+      top: -100%;
+      left: -100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.7) 10%, transparent 10.01%);
+      background-size: 10% 10%;
+      transform: scale(10);
+      opacity: 0;
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    button:active::after {
+      transform: scale(0);
+      opacity: 1;
+      transition: 0s;
+    }
+
+    /* Success Message */
+    #successMsg {
+      margin-top: 15px;
+      font-size: 15px;
+      color: #15d231;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.6s ease;
+    }
+
+    #successMsg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hidden Class */
+    .hidden {
+      display: none;
+    }
+
+    /* Keyframes */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%;}
+      50% { background-position: 100% 50%;}
+      100% { background-position: 0% 50%;}
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .glass-box {
+        padding: 20px;
+      }
+      .glass-box h1 {
+        font-size: 22px;
+      }
+      textarea {
+        font-size: 14px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">ConfessHub</div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="glass-box">
+      <h1>Share Your Secret ✨</h1>
+      <textarea id="secretMessage" placeholder="Type your secret..." maxlength="400"></textarea>
+      <div id="charCounter" class="char-counter">400 characters remaining</div>
+      <button id="submitBtn" onclick="submitSecret()">Submit</button>
+      <p id="successMsg" class="hidden">✅ Secret submitted successfully!</p>
+    </div>
+  </div>
+
+  <script>
+    const secretMessage = document.getElementById("secretMessage");
+    const charCounter = document.getElementById("charCounter");
+    const submitBtn = document.getElementById("submitBtn");
+    const maxChars = 400;
+
+    // Update character counter
+    secretMessage.addEventListener("input", function() {
+      const remaining = maxChars - this.value.length;
+      
+      // Update counter text
+      charCounter.textContent = `${remaining} characters remaining`;
+      
+      // Update styling based on remaining characters
+      if (remaining < 50) {
+        charCounter.className = "char-counter danger";
+      } else if (remaining < 100) {
+        charCounter.className = "char-counter warning";
+      } else {
+        charCounter.className = "char-counter";
+      }
+      
+      // Disable button if over limit
+      submitBtn.disabled = this.value.length > maxChars || this.value.trim() === "";
+    });
+
+    async function submitSecret() {
+      const message = secretMessage.value;
+      const successMsg = document.getElementById("successMsg");
+
+      // Validate message
+      if (!message.trim()) {
+        alert("Please type a secret!");
+        return;
+      }
+      
+      if (message.length > maxChars) {
+        alert(`Your secret is too long! Maximum ${maxChars} characters allowed.`);
+        return;
+      }
+
+      // Disable button during submission
+      submitBtn.disabled = true;
+      
+      // Simulate API call (replace with your actual API endpoint)
+      try {
+        const res = await fetch("/api/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          successMsg.classList.remove("hidden");
+          successMsg.classList.add("show");
+          secretMessage.value = "";
+          charCounter.textContent = "400 characters remaining";
+          charCounter.className = "char-counter";
+
+          setTimeout(() => {
+            successMsg.classList.remove("show");
+            submitBtn.disabled = false;
+          }, 3000);
+        } else {
+          alert("❌ Error submitting secret.");
+          submitBtn.disabled = false;
+        }
+      } catch (error) {
+        alert("❌ Error submitting secret.");
+        submitBtn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

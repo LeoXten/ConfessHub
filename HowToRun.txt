@@ -1,0 +1,7 @@
+in terminal 
+
+        node server.js
+
+For normal user :   http://localhost:5000
+
+For admin :         http://localhost:5000/adminDE15.html

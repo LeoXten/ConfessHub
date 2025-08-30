@@ -6,15 +6,14 @@ const path = require("path");
 const app = express();
 
 // ✅ CORS: allow your real Render URL + localhost
-app.use(
-  cors({
-    origin: [
-      "https://confesshub-pi3x.onrender.com", // your deployed frontend
-      "http://localhost:5000",                // local dev
-    ],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "https://confesshub-pi3x.onrender.com", // ✅ your real Render frontend
+    "http://localhost:5000"                 // ✅ for local dev
+  ],
+  credentials: true
+}));
+
 
 // ✅ Parse JSON bodies
 app.use(express.json());
